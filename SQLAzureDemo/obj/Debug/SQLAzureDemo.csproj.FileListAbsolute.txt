@@ -1,0 +1,14 @@
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\obj\Debug\SQLAzureDemo.csprojResolveAssemblyReference.cache
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\SQLAzureDemo.dll.config
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\SQLAzureDemo.dll
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\SQLAzureDemo.pdb
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\EntityFramework.dll
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\EntityFramework.SqlServer.dll
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\Microsoft.Azure.Documents.Client.dll
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\Newtonsoft.Json.dll
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\EntityFramework.xml
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\EntityFramework.SqlServer.xml
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\Microsoft.Azure.Documents.Client.xml
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\Newtonsoft.Json.xml
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\obj\Debug\SQLAzureDemo.dll
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\obj\Debug\SQLAzureDemo.pdb

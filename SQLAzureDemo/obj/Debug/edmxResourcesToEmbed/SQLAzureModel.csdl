@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AramPerformanceTestDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="AramPerformanceTestDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Candidates" EntityType="AramPerformanceTestDBModel.Candidate" />
+    <EntitySet Name="CandidateStatus" EntityType="AramPerformanceTestDBModel.CandidateStatu" />
+    <AssociationSet Name="fk_CaniddateStatus" Association="AramPerformanceTestDBModel.fk_CaniddateStatus">
+      <End Role="CandidateStatu" EntitySet="CandidateStatus" />
+      <End Role="Candidate" EntitySet="Candidates" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Candidate">
+    <Key>
+      <PropertyRef Name="CandidateId" />
+    </Key>
+    <Property Name="CandidateId" Type="Int64" Nullable="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CandidateStatusId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CandidateStatu" Relationship="AramPerformanceTestDBModel.fk_CaniddateStatus" FromRole="Candidate" ToRole="CandidateStatu" />
+  </EntityType>
+  <EntityType Name="CandidateStatu">
+    <Key>
+      <PropertyRef Name="CandidateStatusId" />
+    </Key>
+    <Property Name="CandidateStatusId" Type="Int32" Nullable="false" />
+    <Property Name="CandidateStatusName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Candidates" Relationship="AramPerformanceTestDBModel.fk_CaniddateStatus" FromRole="CandidateStatu" ToRole="Candidate" />
+  </EntityType>
+  <Association Name="fk_CaniddateStatus">
+    <End Type="AramPerformanceTestDBModel.CandidateStatu" Role="CandidateStatu" Multiplicity="1" />
+    <End Type="AramPerformanceTestDBModel.Candidate" Role="Candidate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CandidateStatu">
+        <PropertyRef Name="CandidateStatusId" />
+      </Principal>
+      <Dependent Role="Candidate">
+        <PropertyRef Name="CandidateStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

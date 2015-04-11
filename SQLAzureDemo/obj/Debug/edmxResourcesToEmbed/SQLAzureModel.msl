@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AramPerformanceTestDBModelStoreContainer" CdmEntityContainer="AramPerformanceTestDBEntities">
+    <EntitySetMapping Name="Candidates">
+      <EntityTypeMapping TypeName="AramPerformanceTestDBModel.Candidate">
+        <MappingFragment StoreEntitySet="Candidate">
+          <ScalarProperty Name="CandidateStatusId" ColumnName="CandidateStatusId" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CandidateStatus">
+      <EntityTypeMapping TypeName="AramPerformanceTestDBModel.CandidateStatu">
+        <MappingFragment StoreEntitySet="CandidateStatus">
+          <ScalarProperty Name="CandidateStatusName" ColumnName="CandidateStatusName" />
+          <ScalarProperty Name="CandidateStatusId" ColumnName="CandidateStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

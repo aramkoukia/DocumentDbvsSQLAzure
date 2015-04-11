@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AramPerformanceTestDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Candidate">
+    <Key>
+      <PropertyRef Name="CandidateId" />
+    </Key>
+    <Property Name="CandidateId" Type="bigint" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="CandidateStatusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CandidateStatus">
+    <Key>
+      <PropertyRef Name="CandidateStatusId" />
+    </Key>
+    <Property Name="CandidateStatusId" Type="int" Nullable="false" />
+    <Property Name="CandidateStatusName" Type="nvarchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_CaniddateStatus">
+    <End Role="CandidateStatus" Type="Self.CandidateStatus" Multiplicity="1" />
+    <End Role="Candidate" Type="Self.Candidate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CandidateStatus">
+        <PropertyRef Name="CandidateStatusId" />
+      </Principal>
+      <Dependent Role="Candidate">
+        <PropertyRef Name="CandidateStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AramPerformanceTestDBModelStoreContainer">
+    <EntitySet Name="Candidate" EntityType="Self.Candidate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CandidateStatus" EntityType="Self.CandidateStatus" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_CaniddateStatus" Association="Self.fk_CaniddateStatus">
+      <End Role="CandidateStatus" EntitySet="CandidateStatus" />
+      <End Role="Candidate" EntitySet="Candidate" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

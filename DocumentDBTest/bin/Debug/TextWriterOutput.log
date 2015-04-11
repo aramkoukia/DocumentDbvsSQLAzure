@@ -1,0 +1,12 @@
+Add 10 rows to DocumentDB took:00:00:01.3581273
+Add 100 rows to DocumentDB took:00:00:09.0996640
+Add 100 rows to SQL Azure took:00:00:21.9046744
+Add 1000 rows to DocumentDB took:00:01:21.5708659
+Add 1000 rows to DocumentDB took:00:14:31.5634444
+Add 10 rows to SQL Azure took:00:03:33.4606796
+Add 10000 rows to SQL Azure took:00:35:29.6755560
+Read candidates by Name from SQL Azure took:00:00:00.7836187
+Read 1000 candidates from SQL Azure took:00:00:00.2373464
+Read candidates by Id from SQL Azure took:00:00:00.0744431
+read candidate by Id from DocumentDB took:00:02:38.2502530
+read 50 candidates by Name from DocumentDB took:00:04:30.8613131

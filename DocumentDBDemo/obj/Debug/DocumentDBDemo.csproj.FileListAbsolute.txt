@@ -1,0 +1,10 @@
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\obj\Debug\DocumentDBDemo.csprojResolveAssemblyReference.cache
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\bin\Debug\DocumentDBDemo.dll.config
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\bin\Debug\DocumentDBDemo.dll
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\bin\Debug\DocumentDBDemo.pdb
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\bin\Debug\Microsoft.Azure.Documents.Client.dll
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\bin\Debug\Newtonsoft.Json.dll
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\bin\Debug\Microsoft.Azure.Documents.Client.xml
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\bin\Debug\Newtonsoft.Json.xml
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\obj\Debug\DocumentDBDemo.dll
+E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\obj\Debug\DocumentDBDemo.pdb

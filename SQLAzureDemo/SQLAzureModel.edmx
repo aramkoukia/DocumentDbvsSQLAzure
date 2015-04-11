@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AramPerformanceTestDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="CandidateId" />
+          </Key>
+          <Property Name="CandidateId" Type="bigint" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="CandidateStatusId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CandidateStatus">
+          <Key>
+            <PropertyRef Name="CandidateStatusId" />
+          </Key>
+          <Property Name="CandidateStatusId" Type="int" Nullable="false" />
+          <Property Name="CandidateStatusName" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_CaniddateStatus">
+          <End Role="CandidateStatus" Type="Self.CandidateStatus" Multiplicity="1" />
+          <End Role="Candidate" Type="Self.Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateStatus">
+              <PropertyRef Name="CandidateStatusId" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="CandidateStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AramPerformanceTestDBModelStoreContainer">
+          <EntitySet Name="Candidate" EntityType="Self.Candidate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CandidateStatus" EntityType="Self.CandidateStatus" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_CaniddateStatus" Association="Self.fk_CaniddateStatus">
+            <End Role="CandidateStatus" EntitySet="CandidateStatus" />
+            <End Role="Candidate" EntitySet="Candidate" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AramPerformanceTestDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AramPerformanceTestDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Candidates" EntityType="AramPerformanceTestDBModel.Candidate" />
+          <EntitySet Name="CandidateStatus" EntityType="AramPerformanceTestDBModel.CandidateStatu" />
+          <AssociationSet Name="fk_CaniddateStatus" Association="AramPerformanceTestDBModel.fk_CaniddateStatus">
+            <End Role="CandidateStatu" EntitySet="CandidateStatus" />
+            <End Role="Candidate" EntitySet="Candidates" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Candidate">
+          <Key>
+            <PropertyRef Name="CandidateId" />
+          </Key>
+          <Property Name="CandidateId" Type="Int64" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CandidateStatusId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CandidateStatu" Relationship="AramPerformanceTestDBModel.fk_CaniddateStatus" FromRole="Candidate" ToRole="CandidateStatu" />
+        </EntityType>
+        <EntityType Name="CandidateStatu">
+          <Key>
+            <PropertyRef Name="CandidateStatusId" />
+          </Key>
+          <Property Name="CandidateStatusId" Type="Int32" Nullable="false" />
+          <Property Name="CandidateStatusName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Candidates" Relationship="AramPerformanceTestDBModel.fk_CaniddateStatus" FromRole="CandidateStatu" ToRole="Candidate" />
+        </EntityType>
+        <Association Name="fk_CaniddateStatus">
+          <End Type="AramPerformanceTestDBModel.CandidateStatu" Role="CandidateStatu" Multiplicity="1" />
+          <End Type="AramPerformanceTestDBModel.Candidate" Role="Candidate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CandidateStatu">
+              <PropertyRef Name="CandidateStatusId" />
+            </Principal>
+            <Dependent Role="Candidate">
+              <PropertyRef Name="CandidateStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AramPerformanceTestDBModelStoreContainer" CdmEntityContainer="AramPerformanceTestDBEntities">
+          <EntitySetMapping Name="Candidates">
+            <EntityTypeMapping TypeName="AramPerformanceTestDBModel.Candidate">
+              <MappingFragment StoreEntitySet="Candidate">
+                <ScalarProperty Name="CandidateStatusId" ColumnName="CandidateStatusId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CandidateId" ColumnName="CandidateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CandidateStatus">
+            <EntityTypeMapping TypeName="AramPerformanceTestDBModel.CandidateStatu">
+              <MappingFragment StoreEntitySet="CandidateStatus">
+                <ScalarProperty Name="CandidateStatusName" ColumnName="CandidateStatusName" />
+                <ScalarProperty Name="CandidateStatusId" ColumnName="CandidateStatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

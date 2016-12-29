@@ -1,0 +1,5 @@
+DocumentDBTest/bin/*
+DocumentDBDemo/bin/*
+SQLAzureDemo/obj/*
+packages/*
+

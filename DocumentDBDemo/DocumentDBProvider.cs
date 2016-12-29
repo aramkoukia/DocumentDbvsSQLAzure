@@ -12,92 +12,85 @@ namespace DocumentDBDemo
 {
     public class DocumentDBProvider
     {
-        private static string EndpointUrl = "https://aramdocumentdb.documents.azure.com:443/";
-        private static string AuthorizationKey = "zG+UxBwYg42C9im/vvpehXOr3EIK4em2JRgrr9OsGzdpk5z5JmDd5+hQ+gwSTkPUfNaKLI4BcEnFAkTstT9WaA==";
+        private static string EndpointUrl = "https://querydemo.documents.azure.com:443/";
+        private static string AuthorizationKey = "+9x2hFc7QsZ5hReULaqmBs01amCFiQAJZuoTqdZ79h/fGd2RSYoJVXAegVS7suJBg1pB+RQC8D45gp7bk0rSUw==";
         private static string DatabaseName = "InterviewDB";
         private static string DocumentCollectionName = "InterviewCollection";
 
-        public async Task<DocumentCollection> CreateDatabaseAndDocumentCollection()
+        private DocumentClient client;
+        private DocumentCollection collection;
+
+        public DocumentDBProvider()
         {
-           
-            var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
+            this.client = new DocumentClient(
+                new Uri(EndpointUrl),
+                AuthorizationKey,
+                new ConnectionPolicy
+                {
+                    ConnectionMode = ConnectionMode.Direct,
+                    ConnectionProtocol = Protocol.Tcp,
+                    MaxConnectionLimit = 100,
+                    RetryOptions = new RetryOptions { MaxRetryAttemptsOnThrottledRequests = 10 }
+                });
 
+            Database database = this.client.CreateDatabaseIfNotExistsAsync(new Database { Id = DatabaseName }).Result;
 
-            Database database = await client.CreateDatabaseAsync(new Database { Id = DatabaseName });
+            DocumentCollection documentCollection = this.client.CreateDocumentCollectionIfNotExistsAsync(
+                database.CollectionsLink,
+                new DocumentCollection { Id = DocumentCollectionName },
+                new RequestOptions { OfferThroughput = 10000 }).Result;
 
-            DocumentCollection documentCollection = await client.CreateDocumentCollectionAsync(database.CollectionsLink,
-                                                                                                new DocumentCollection { Id = DocumentCollectionName }
-                                                                                               );
-            return documentCollection;
+            this.collection = documentCollection;
+        }
+
+        public async Task CleanupDocuments()
+        {
+            foreach (Document document in client.CreateDocumentQuery(this.collection.SelfLink))
+            {
+                await client.DeleteDocumentAsync(document.SelfLink);
+            }
+        }
+
+        public DocumentCollection CreateDatabaseAndDocumentCollection()
+        {
+            return this.collection;
         }
 
         public string GetDocumentLink()
         {
-            var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
-            Database database = client.CreateDatabaseQuery().Where(db => db.Id == DatabaseName).AsEnumerable().FirstOrDefault();
-            DocumentCollection documentCollection = client.CreateDocumentCollectionQuery(database.CollectionsLink).Where(db => db.Id == DocumentCollectionName).AsEnumerable().FirstOrDefault();
-            return documentCollection.DocumentsLink;
-        }
-        public DocumentClient GetClient()
-        {
-            return new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
+            return this.collection.DocumentsLink;
         }
 
-        public async Task<ResourceResponse<Document>> AddCanidateToCollection(string documentLink,DocumentClient client, Candidate candidate)
+        public DocumentClient GetClient()
         {
-            return await client.CreateDocumentAsync(documentLink, candidate);
+            return this.client;
+        }
+
+        public async Task<ResourceResponse<Document>> AddCandidateToCollection(string documentLink,DocumentClient client, Candidate candidate)
+        {
+            return await client.UpsertDocumentAsync(documentLink, candidate);
         }
 
         public List<Candidate> GetCandidatesCollection()
         {
-            FeedOptions feedOptions = new FeedOptions()
-            {
-                MaxItemCount = 100
-            };
-            var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
-            Database database = client.CreateDatabaseQuery().Where(db => db.Id == DatabaseName).AsEnumerable().FirstOrDefault();
-            DocumentCollection documentCollection = client.CreateDocumentCollectionQuery(database.CollectionsLink).Where(db => db.Id == DocumentCollectionName).AsEnumerable().FirstOrDefault();
-
-            return client.CreateDocumentQuery<Candidate>(documentCollection.DocumentsLink, feedOptions).ToList();
+            return client.CreateDocumentQuery<Candidate>(this.collection.SelfLink).Take(100).ToList();
         }
 
         public List<Candidate> GetCandidateById(int candidateId)
         {
-            FeedOptions feedOptions = new FeedOptions()
-            {
-                MaxItemCount = 1
-            };
-            var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
-            Database database = client.CreateDatabaseQuery().Where(db => db.Id == DatabaseName).AsEnumerable().FirstOrDefault();
-            DocumentCollection documentCollection = client.CreateDocumentCollectionQuery(database.CollectionsLink, feedOptions).Where(db => db.Id == DocumentCollectionName).AsEnumerable().FirstOrDefault();
-
-            return client.CreateDocumentQuery<Candidate>(documentCollection.DocumentsLink, feedOptions).Where(m => m.CandidateId == candidateId).ToList();
+            return client.CreateDocumentQuery<Candidate>(this.collection.SelfLink).Where(m => m.CandidateId == candidateId).Take(1).ToList();
         }
 
         public List<Candidate> GetCandidatesByName(string candidateName)
         {
-            FeedOptions feedOptions = new FeedOptions()
-            {
-                MaxItemCount = 50,
-            };
-            var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
-            Database database = client.CreateDatabaseQuery().Where(db => db.Id == DatabaseName).AsEnumerable().FirstOrDefault();
-            DocumentCollection documentCollection = client.CreateDocumentCollectionQuery(database.CollectionsLink).Where(db => db.Id == DocumentCollectionName).AsEnumerable().FirstOrDefault();
-
-            return client.CreateDocumentQuery<Candidate>(documentCollection.DocumentsLink,feedOptions).Where(m => m.CandidateFirstName == candidateName).ToList();
+            return client.CreateDocumentQuery<Candidate>(this.collection.SelfLink)
+                .Where(m => m.CandidateFirstName == candidateName)
+                .Take(50).ToList();
         }
 
         public List<Candidate> GetCandidatesList(int pageSize)
         {
-            FeedOptions feedOptions = new FeedOptions()
-            {
-                MaxItemCount = pageSize
-            };
-            var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
-            Database database = client.CreateDatabaseQuery().Where(db => db.Id == DatabaseName).AsEnumerable().FirstOrDefault();
-            DocumentCollection documentCollection = client.CreateDocumentCollectionQuery(database.CollectionsLink).Where(db => db.Id == DocumentCollectionName).AsEnumerable().FirstOrDefault();
-
-            return client.CreateDocumentQuery<Candidate>(documentCollection.DocumentsLink,feedOptions).ToList();
+            return client.CreateDocumentQuery<Candidate>(this.collection.SelfLink).Take(pageSize).ToList();
         }
 
     }

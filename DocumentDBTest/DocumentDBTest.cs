@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using DocumentDBDemo;
 using System.Diagnostics;
 using Microsoft.Azure.Documents.Client;
@@ -10,32 +11,41 @@ namespace DocumentDBTest
     [TestClass]
     public class DocumentDBTest
     {
+        private DocumentDBProvider sut;
+
+        private DocumentDBProvider Sut
+        {
+            get
+            {
+                if (sut == null)
+                {
+                    this.sut = new DocumentDBDemo.DocumentDBProvider();
+                }
+
+                return this.sut;
+            }
+        }
 
         [TestInitialize]
-        private void Initilize()
+        private void Initialize()
         {
             Trace.Listeners.Add(new TextWriterTraceListener("TextWriterOutput.log", "myListener"));
-            var sut = new DocumentDBDemo.DocumentDBProvider();
+            this.Sut.CleanupDocuments().Wait();
         }
 
 
         [TestMethod]
         public async Task CreateDatabaseAndDocumentCollection_Test()
-        {
-            
-            var sut = new DocumentDBDemo.DocumentDBProvider();
-            var result = await sut.CreateDatabaseAndDocumentCollection();
+        {            
+            var result = this.Sut.CreateDatabaseAndDocumentCollection();
             Assert.IsNotNull(result);
-
         }
 
         [TestMethod]
         public async Task AddCanidateToCollection_Test()
         {
-
-            var sut = new DocumentDBDemo.DocumentDBProvider();
-            var documentLink = sut.GetDocumentLink();
-            var documentClient = sut.GetClient();
+            var documentLink = Sut.GetDocumentLink();
+            var documentClient = Sut.GetClient();
             var candidate = new Candidate()
             {
                 CandidateFirstName = "Aram",
@@ -46,7 +56,7 @@ namespace DocumentDBTest
                      CandidateStatusName = "New"
                 }
             };
-            var result = await sut.AddCanidateToCollection(documentLink, documentClient, candidate);
+            var result = await Sut.AddCandidateToCollection(documentLink, documentClient, candidate);
             Assert.IsNotNull(result);
 
         }
@@ -54,26 +64,23 @@ namespace DocumentDBTest
         [TestMethod]
         public void GetCandidatesCollection_Test()
         {
-            var sut = new DocumentDBDemo.DocumentDBProvider();
-            var result = sut.GetCandidatesCollection();
+            var result = Sut.GetCandidatesCollection();
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
         public void GetCandidateById_Test()
         {
-            var sut = new DocumentDBDemo.DocumentDBProvider();
-            var result = sut.GetCandidateById(1);
+            var result = Sut.GetCandidateById(1);
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
         public async Task Add10CandidatesToDocumentDB()
         {
-            var sut = new DocumentDBDemo.DocumentDBProvider();
             Stopwatch stopWatch = new Stopwatch();
-            var documentLink = sut.GetDocumentLink();
-            var documentClient = sut.GetClient();
+            var documentLink = Sut.GetDocumentLink();
+            var documentClient = Sut.GetClient();
 
             stopWatch.Start();
             for (int i = 0; i < 10; i++)
@@ -89,23 +96,23 @@ namespace DocumentDBTest
                         CandidateStatusName = "New"
                     }
                 };
-                await sut.AddCanidateToCollection(documentLink, documentClient, candidate);
+                await Sut.AddCandidateToCollection(documentLink, documentClient, candidate);
             }
             stopWatch.Stop();
             Trace.WriteLine("Add 10 rows to DocumentDB took:" + stopWatch.Elapsed);
             Trace.Flush();
         }
 
-        [TestMethod]
-        public async Task Add100CandidatesToDocumentDB()
+        private async Task AddNCandidatesToDocumentDB(int n)
         {
-            var sut = new DocumentDBDemo.DocumentDBProvider();
             Stopwatch stopWatch = new Stopwatch();
-            var documentLink = sut.GetDocumentLink();
-            var documentClient = sut.GetClient();
+            var documentLink = Sut.GetDocumentLink();
+            var documentClient = Sut.GetClient();
 
             stopWatch.Start();
-            for (int i = 0; i < 100; i++)
+            List<Task> tasks = new List<Task>();
+
+            for (int i = 0; i < n; i++)
             {
                 var candidate = new Candidate()
                 {
@@ -118,81 +125,43 @@ namespace DocumentDBTest
                         CandidateStatusName = "New"
                     }
                 };
-                await sut.AddCanidateToCollection(documentLink, documentClient, candidate);
+                tasks.Add(Sut.AddCandidateToCollection(documentLink, documentClient, candidate));
             }
+
+            await Task.WhenAll(tasks);
+
             stopWatch.Stop();
-            Trace.WriteLine("Add 100 rows to DocumentDB took:" + stopWatch.Elapsed);
+            Trace.WriteLine(string.Format("Add {0} rows to DocumentDB took {1}", n,stopWatch.Elapsed));
             Trace.Flush();
+        }
+
+        [TestMethod]
+        public async Task Add100CandidatesToDocumentDB()
+        {
+            await AddNCandidatesToDocumentDB(100);
         }
 
         [TestMethod]
         public async Task Add1000CandidatesToDocumentDB()
         {
-            var sut = new DocumentDBDemo.DocumentDBProvider();
-            Stopwatch stopWatch = new Stopwatch();
-            var documentLink = sut.GetDocumentLink();
-            var documentClient = sut.GetClient();
-
-            stopWatch.Start();
-            for (int i = 0; i < 1000; i++)
-            {
-                var candidate = new Candidate()
-                {
-                    CandidateFirstName = "Aram",
-                    CandidateLastName = "Koukia",
-                    CandidateId = 1,
-                    Status = new CandidateStatus()
-                    {
-                        CandidateStatusId = 1,
-                        CandidateStatusName = "New"
-                    }
-                };
-                await sut.AddCanidateToCollection(documentLink, documentClient, candidate);
-            }
-            stopWatch.Stop();
-            Trace.WriteLine("Add 1000 rows to DocumentDB took:" + stopWatch.Elapsed);
-            Trace.Flush();
+            await AddNCandidatesToDocumentDB(1000);
         }
 
         [TestMethod]
         public async Task Add10000CandidatesToDocumentDB()
         {
-            var sut = new DocumentDBDemo.DocumentDBProvider();
-            Stopwatch stopWatch = new Stopwatch();
-            var documentLink = sut.GetDocumentLink();
-            var documentClient = sut.GetClient();
-
-            stopWatch.Start();
-            for (int i = 0; i < 10000; i++)
-            {
-                var candidate = new Candidate()
-                {
-                    CandidateFirstName = "Aram",
-                    CandidateLastName = "Koukia",
-                    CandidateId = 1,
-                    Status = new CandidateStatus()
-                    {
-                        CandidateStatusId = 1,
-                        CandidateStatusName = "New"
-                    }
-                };
-                await sut.AddCanidateToCollection(documentLink, documentClient, candidate);
-            }
-            stopWatch.Stop();
-            Trace.WriteLine("Add 1000 rows to DocumentDB took:" + stopWatch.Elapsed);
-            Trace.Flush();
+            await AddNCandidatesToDocumentDB(10000);
         }
 
         [TestMethod]
         public void ReadCandidatesByIdFromDocumentDB()
         {
-            var sut = new DocumentDBDemo.DocumentDBProvider();
             Stopwatch stopWatch = new Stopwatch();
-            var documentLink = sut.GetDocumentLink();
-            var documentClient = sut.GetClient();
+            var documentLink = Sut.GetDocumentLink();
+            var documentClient = Sut.GetClient();
 
             stopWatch.Start();
-            var result = sut.GetCandidateById(1);
+            var result = Sut.GetCandidateById(1);
             stopWatch.Stop();
             Trace.WriteLine("read candidate by Id from DocumentDB took:" + stopWatch.Elapsed);
             Trace.Flush();
@@ -201,13 +170,12 @@ namespace DocumentDBTest
         [TestMethod]
         public void ReadCandidatesListFromDocumentDB()
         {
-            var sut = new DocumentDBDemo.DocumentDBProvider();
             Stopwatch stopWatch = new Stopwatch();
-            var documentLink = sut.GetDocumentLink();
-            var documentClient = sut.GetClient();
+            var documentLink = Sut.GetDocumentLink();
+            var documentClient = Sut.GetClient();
 
             stopWatch.Start();
-            var result = sut.GetCandidatesList(1000);
+            var result = Sut.GetCandidatesList(1000);
             stopWatch.Stop();
             Trace.WriteLine("read 1000 candidates list from DocumentDB took:" + stopWatch.Elapsed);
             Trace.Flush();
@@ -216,13 +184,12 @@ namespace DocumentDBTest
         [TestMethod]
         public void ReadCandidatesByNameFromDocumentDB()
         {
-            var sut = new DocumentDBDemo.DocumentDBProvider();
             Stopwatch stopWatch = new Stopwatch();
-            var documentLink = sut.GetDocumentLink();
-            var documentClient = sut.GetClient();
+            var documentLink = Sut.GetDocumentLink();
+            var documentClient = Sut.GetClient();
 
             stopWatch.Start();
-            var result = sut.GetCandidatesByName("Aram");
+            var result = Sut.GetCandidatesByName("Aram");
             stopWatch.Stop();
             Trace.WriteLine("read 50 candidates by Name from DocumentDB took:" + stopWatch.Elapsed);
             Trace.Flush();

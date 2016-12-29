@@ -12,3 +12,15 @@ E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\Microso
 E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\bin\Debug\Newtonsoft.Json.xml
 E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\obj\Debug\SQLAzureDemo.dll
 E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\SQLAzureDemo\obj\Debug\SQLAzureDemo.pdb
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\bin\Debug\SQLAzureDemo.dll.config
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\bin\Debug\SQLAzureDemo.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\bin\Debug\SQLAzureDemo.pdb
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\bin\Debug\EntityFramework.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\bin\Debug\Newtonsoft.Json.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\bin\Debug\EntityFramework.xml
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\bin\Debug\Newtonsoft.Json.xml
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\obj\Debug\SQLAzureDemo.csprojResolveAssemblyReference.cache
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\obj\Debug\SQLAzureDemo.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\SQLAzureDemo\obj\Debug\SQLAzureDemo.pdb

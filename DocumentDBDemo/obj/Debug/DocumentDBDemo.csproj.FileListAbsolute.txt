@@ -8,3 +8,15 @@ E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\bin\Debug\Micro
 E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\bin\Debug\Newtonsoft.Json.xml
 E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\obj\Debug\DocumentDBDemo.dll
 E:\AramVSOnline\AramTest\DocumentDBVsSQLAzureDemo\DocumentDBDemo\obj\Debug\DocumentDBDemo.pdb
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\bin\Debug\Microsoft.Azure.Documents.ServiceInterop.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\bin\Debug\DocumentDB.Spatial.Sql.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\bin\Debug\DocumentDBDemo.dll.config
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\bin\Debug\DocumentDBDemo.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\bin\Debug\DocumentDBDemo.pdb
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\bin\Debug\Microsoft.Azure.Documents.Client.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\bin\Debug\Newtonsoft.Json.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\bin\Debug\Microsoft.Azure.Documents.Client.xml
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\bin\Debug\Newtonsoft.Json.xml
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\obj\Debug\DocumentDBDemo.dll
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\obj\Debug\DocumentDBDemo.pdb
+C:\Users\arramac\workspace\DocumentDbvsSQLAzure\DocumentDBDemo\obj\Debug\DocumentDBDemo.csprojResolveAssemblyReference.cache
